@@ -3,13 +3,10 @@ import User from "../models/user.model";
 import bcrypt from 'bcrypt';
 
 import jwt from 'jsonwebtoken';
-import { IUser } from "src/types/user.type";
 
 import config from '../../config';
 import { VerifyTokenService } from '../services/verify-token.service';
 import bodyParser from "body-parser";
-import { Document } from "mongodb";
-import { log } from "console";
 
 const AuthController = Router();
 const verifyTokenService = new VerifyTokenService();
@@ -82,7 +79,7 @@ AuthController.post('/login', async (req, res) => {
             return res.status(401).send({auth: false, token: null, message: 'Wrong email or password'});
         }
         let token = jwt.sign({id: user._id}, config.secret, {
-            expiresIn: 86400 // expires in 24 hours
+            expiresIn: 10 // expires in 24 hours
         });
 
         const userData = {

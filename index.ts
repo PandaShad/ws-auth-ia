@@ -1,7 +1,8 @@
 import express, { Express, Request, Response } from 'express';
-import { Schema, model, connect } from 'mongoose';
+import { connect } from 'mongoose';
 import dotenv from 'dotenv';
 import AuthController from './src/controllers/auth.controller';
+import ConversationController from './src/controllers/conversation.controller';
 
 dotenv.config();
 
@@ -12,6 +13,7 @@ const uri = process.env.MONGO_URI || '';
 const prefix = '/api';
 
 const authController = AuthController;
+const conversationController = ConversationController;
 
 connect(uri)
     .then(() => {
@@ -34,6 +36,8 @@ app.get(`${prefix}`, (req: Request, res: Response) => {
 
 app.use(`${prefix}/auth`, headers, authController);
 
+app.use(`${prefix}/conversation`, headers, conversationController);
+
 app.listen(port, () => {
-  console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
+  console.log(`⚡️ [server]: Server is running at http://localhost:${port}`);
 });

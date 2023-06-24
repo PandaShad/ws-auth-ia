@@ -15,10 +15,8 @@ const userSchema = new Schema({
     },
     conversations: {
         type: [{
-            id: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'conversation'
-            }
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'conversations'
         }],
         required: true
     }
