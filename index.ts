@@ -15,6 +15,8 @@ const prefix = '/api';
 const authController = AuthController;
 const conversationController = ConversationController;
 
+console.log(uri);
+
 connect(uri)
     .then(() => {
         console.log('Connecté à la base MongoDB assignments dans le cloud !');

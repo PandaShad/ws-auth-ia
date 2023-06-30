@@ -79,7 +79,7 @@ AuthController.post('/login', async (req, res) => {
             return res.status(401).send({auth: false, token: null, message: 'Wrong email or password'});
         }
         let token = jwt.sign({id: user._id}, config.secret, {
-            expiresIn: 10 // expires in 24 hours
+            expiresIn: 86400 // expires in 24 hours
         });
 
         const userData = {

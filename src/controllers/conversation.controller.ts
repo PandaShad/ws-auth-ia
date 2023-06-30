@@ -21,6 +21,7 @@ ConversationController.get('/', async (req: any, res: any) => {
         }
         jwt.verify(token, config.secret, async (err: any, decoded: any) => {
             if (err) {
+                console.log(err);
                 return res.status(500).send({auth: false, message: 'Wrong token'});
             }
             try {
