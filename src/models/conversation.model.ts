@@ -19,6 +19,9 @@ const conversationSchema = new Schema({
             response: {
                 type: String,
                 required: true
+            },
+            isImg: {
+                type: Boolean
             }
         }],
         required: true, 

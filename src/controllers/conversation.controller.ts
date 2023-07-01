@@ -50,6 +50,41 @@ ConversationController.get('/', async (req: any, res: any) => {
     }
 })
 
+ConversationController.post('/add', async (req: any, res: any) => {
+    try {
+        const token = req.headers['authorization']
+        if (!token) {
+            return res.status(401).send({auth: false, message: 'No token provided.'});
+        }
+        jwt.verify(token, config.secret, async (err: any, decoded: any) => {
+            if (err) {
+                return res.status(500).send({auth: false, message: 'Wrong token'});
+            }
+            try {
+                console.log(req.body);
+                const conversationId = req.body.id;
+                const conversation = await Conversation.findOneAndUpdate({
+                    _id: new ObjectId(conversationId)
+                },
+                {
+                    $addToSet: {
+                        conversation: {
+                            prompt: req.body.prompt,
+                            response: req.body.response,
+                            isImg: req.body.isImg
+                        }
+                    }
+                });
+                return res.status(200).send(conversation);
+            } catch (err) {
+                return res.status(500).send('There was a problem finding the user');
+            }
+        });
+    } catch (err) {
+        return res.status(500).send('There was a problem adding the conversation');
+    }
+})
+
 ConversationController.post('/create', async (req: any, res: any) => {
     try {
         const conversationToCreate = await Conversation.create({
@@ -58,7 +93,8 @@ ConversationController.post('/create', async (req: any, res: any) => {
             conversation: [
                 {
                     prompt: req.body.prompt,
-                    response: req.body.response
+                    response: req.body.response,
+                    isImg: req.body.isImg
                 }
             ]
         });
@@ -85,7 +121,7 @@ ConversationController.post('/create', async (req: any, res: any) => {
                 return res.status(500).send('There was a problem finding the user');
             }
         })
-        return res.status(200).send('Conversation added to the DB');
+        return res.status(200).send(conversationToCreate);
     } catch (err) {
         console.error(err);
         return res.status(500).send('Error while adding the conversation to the dataBase');
