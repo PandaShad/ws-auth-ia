@@ -19,7 +19,7 @@ console.log(uri);
 
 connect(uri)
     .then(() => {
-        console.log('Connecté à la base MongoDB assignments dans le cloud !');
+        console.log('Connecté à la base MongoDB scamgmpt dans le cloud !');
         console.log(`at URI = ${uri}`);
     },
     (err: any) => {
