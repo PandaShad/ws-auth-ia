@@ -9,7 +9,7 @@ dotenv.config();
 const app: Express = express();
 const port = process.env.PORT || 8010;
 
-const uri = process.env.MONGO_URI || '';
+const uri = process.env.MONGO_URI || 'mongodb+srv://admin:admin@cluster0.uchidfe.mongodb.net/scamgpt';
 const prefix = '/api';
 
 const authController = AuthController;
